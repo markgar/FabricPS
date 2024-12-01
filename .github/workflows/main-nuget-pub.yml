@@ -1,0 +1,25 @@
+name: Create Module, Push to Powershell Gallery
+
+on:
+  push:
+    paths:
+    - 'FabricPS/FabricPS.psd1'
+    - '.github/workflows/main-nuget-pub.yml'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Perform Checkout
+      uses: actions/checkout@v1
+    
+    - name: Create Module, Push to PSGallery
+      run: |
+        $env:PSModulePath = $env:PSModulePath + ":" + $pwd
+        Write-Host $env:PSModulePath
+        Import-Module ./FabricPS/FabricPS.psd1 -Force
+        Publish-Module -Name 'FabricPS' -NuGetApiKey '${{ secrets.fabricps_powershell_gallery_api_key }}'
+      shell: pwsh
