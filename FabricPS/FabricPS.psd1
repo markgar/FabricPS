@@ -23,8 +23,8 @@
     # (Optional) Required modules
     RequiredModules = @()
 
-    # (Optional) Dependencies
-    Dependencies = @()
+    # Copyright statement for this module
+    Copyright = '(c) Mark Garner. All rights reserved.'
 
     # (Optional) Private data (can include help files, etc.)
     PrivateData = @{
