@@ -1,5 +1,6 @@
 # Ignore the Scripts directory
 Scripts/
+Archive/
 
 # Ignore PowerShell profile files
 $PROFILE*
