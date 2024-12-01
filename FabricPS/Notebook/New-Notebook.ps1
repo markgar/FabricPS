@@ -1,0 +1,149 @@
+function New-Notebook {
+    <#
+    .SYNOPSIS
+    Creates a new notebook in a specified Fabric workspace.
+
+    .DESCRIPTION
+    Connects to the Fabric API and creates a new notebook in the specified workspace.
+
+    .PARAMETER WorkspaceId
+    The ID of the workspace where the notebook will be created.
+
+    .PARAMETER DisplayName
+    The name of the notebook to create.
+
+    .PARAMETER Description
+    (Optional) A description for the notebook. Cannot exceed 4000 characters.
+
+    .EXAMPLE
+    New-Notebook -WorkspaceId "00000000-0000-0000-0000-000000000000" `
+                 -DisplayName "Notebook 1" `
+                 -Description "A notebook description" `
+                 -Verbose
+
+    .EXAMPLE
+    New-Notebook -WorkspaceId "00000000-0000-0000-0000-000000000000" `
+                 -DisplayName "DevNotebook" `
+                 -Verbose
+    #>
+    param (
+        [Parameter(Mandatory = $true)]
+        [string]$WorkspaceId,
+
+        [Parameter(Mandatory = $true)]
+        [string]$DisplayName,
+
+        [Parameter(Mandatory = $false)]
+        [string]$Description
+    )
+
+    if (-not (Get-Module -Name Az.Accounts)) {
+        try {
+            Import-Module Az.Accounts -ErrorAction Stop
+        }
+        catch {
+            Write-Error "Failed to import Az.Accounts module: $_"
+            throw
+        }
+    }
+
+    try {
+        try {
+            # Retrieve the access token for the Fabric API
+            $tokenResponse = Get-AzAccessToken -ResourceUrl "https://api.fabric.microsoft.com"
+    
+            if (-not $tokenResponse) {
+                throw "Unable to retrieve access token."
+            }
+    
+            $accessToken = $tokenResponse.Token
+        }
+        catch {
+            Write-Error "Failed to retrieve access token: $_"
+        }
+
+        $uri = "https://api.fabric.microsoft.com/v1/workspaces/$WorkspaceId/notebooks"
+        $headers = @{
+            Authorization  = "Bearer $accessToken"
+            Accept         = "application/json"
+            "Content-Type" = "application/json"
+        }
+
+        # Construct the request body
+        $body = @{
+            displayName = $DisplayName
+        }
+
+        if ($Description) {
+            $body.description = $Description
+        }
+
+        $bodyJson = $body | ConvertTo-Json -Depth 10
+
+        # Send the POST request to create the notebook
+        $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method Post -Body $bodyJson -UseBasicParsing -ErrorAction Stop
+
+        $statusCode = $response.StatusCode
+
+
+        if ($statusCode -eq 200) {
+            $responseObj = $response.Content | ConvertFrom-Json
+            return $responseObj
+        }
+        elseif (($statusCode -eq 202) -and ($response.Headers["x-ms-operation-id"])) {
+            # Check for 'x-ms-operation-id' header
+            $operationId = $response.Headers["x-ms-operation-id"]
+
+            # Construct the operation state URI
+            $operationStatetUri = "https://api.fabric.microsoft.com/v1/operations/$operationId"
+
+            $operationStatus = ""
+            $seconds = 1
+            while ($operationStatus -ne "Succeeded") {
+                # Give just a little time to process
+                Start-Sleep -Milliseconds 100
+                # Send GET request to retrieve the operation state
+                $operationStateResponse = Invoke-RestMethod -Uri $operationStatetUri -Headers $headers -Method Get -ErrorAction Stop
+
+                $operationStatus = $operationStateResponse.status
+
+                # Check for failure
+                if ($operationStatus -eq "Failed") {
+                    Write-Error "New notebook operation failed."
+                    return
+                }
+                
+                # Only sleep if the operation is still in progress
+                if ($operationStatus -ne "Succeeded")
+                {
+                    Start-Sleep -Seconds $seconds
+                }
+        
+                # Exponential backoff
+                $seconds = $seconds * 2
+                if ($seconds -gt 16)
+                {
+                    Write-Error "New notebook operation timed out."
+                    return
+                }
+            }
+ 
+            if ($operationStateResponse.status -eq "Succeeded") {
+                # Construct the operation result URI
+                $operationResultUri = "https://api.fabric.microsoft.com/v1/operations/$operationId/result"
+
+                # Send GET request to retrieve the operation result
+                $operationResultResponse = Invoke-RestMethod -Uri $operationResultUri -Headers $headers -Method Get -ErrorAction Stop
+
+                return $operationResultResponse
+            }            
+        }
+        else {
+            Write-Error "Unexpected status code: $statusCode"
+            return
+        }
+    }
+    catch {
+        Write-Error "Failed to create notebook: $_"
+    }
+}
