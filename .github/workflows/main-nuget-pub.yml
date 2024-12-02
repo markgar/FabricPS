@@ -7,15 +7,50 @@ on:
     - '.github/workflows/main-nuget-pub.yml'
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
-
+    environment: 'test'
     steps:
-    
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Install Prerequisites
+        shell: pwsh
+        run: |
+          Install-Module Az -Force
+          Import-Module Az.Accounts -Force
+          Install-Module FabricPS -Force
+          Import-Module FabricPS -Force
+
+      - name: Connect with SPN
+        shell: pwsh
+        run: |
+          # Define Service Principal credentials
+          $clientId     = '${{ secrets.client_id }}'              # Replace with your SP's Application (Client) ID
+          $tenantId     = '${{ secrets.tenant_id }}'              # Replace with your Azure Tenant ID
+          $clientSecret = '${{ secrets.client_secret }}'          # Replace with your SP's Client Secret
+          
+          # Convert the client secret to a SecureString
+          $secureClientSecret = ConvertTo-SecureString -String $clientSecret -AsPlainText -Force
+          
+          # Create a PSCredential object
+          $credential = New-Object System.Management.Automation.PSCredential ($clientId, $secureClientSecret)
+          
+          # Connect to Azure using the Service Principal
+          Connect-AzAccount -ServicePrincipal -Credential $credential -TenantId $tenantId
+
+      - name: Run Automated Tests
+        shell: pwsh
+        run: ./test.ps1
+
+  push-to-psgallery:
+    runs-on: ubuntu-latest
+    environment: 'prod'
+    needs: [test]
+    steps:
     - name: Perform Checkout
       uses: actions/checkout@v4
-    
     - name: Create Module, Push to PSGallery
       run: |
         $env:PSModulePath = $env:PSModulePath + ":" + $pwd
