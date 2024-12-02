@@ -1,4 +1,4 @@
-function New-Notebook {
+function New-Item {
     <#
     .SYNOPSIS
     Creates a new notebook in a specified Fabric workspace.
@@ -31,6 +31,10 @@ function New-Notebook {
         [string]$WorkspaceId,
 
         [Parameter(Mandatory = $true)]
+        [ValidateSet("Notebook")]
+        [string]$ItemType,
+
+        [Parameter(Mandatory = $true)]
         [string]$DisplayName,
 
         [Parameter(Mandatory = $false)]
@@ -40,6 +44,7 @@ function New-Notebook {
     # Construct the request body
     $body = @{
         displayName = $DisplayName
+        itemType = $ItemType
     }
 
     if ($Description) {
@@ -48,6 +53,6 @@ function New-Notebook {
 
     $bodyJson = $body | ConvertTo-Json -Depth 10
 
-    $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/notebooks" -Verb "POST" -Payload $bodyJson
+    $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/items" -Verb "POST" -Payload $bodyJson
     return $response
 }

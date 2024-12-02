@@ -1,4 +1,4 @@
-function New-Notebook {
+function Update-Item {
     <#
     .SYNOPSIS
     Creates a new notebook in a specified Fabric workspace.
@@ -31,6 +31,9 @@ function New-Notebook {
         [string]$WorkspaceId,
 
         [Parameter(Mandatory = $true)]
+        [string]$ItemId,
+
+        [Parameter(Mandatory = $true)]
         [string]$DisplayName,
 
         [Parameter(Mandatory = $false)]
@@ -42,12 +45,13 @@ function New-Notebook {
         displayName = $DisplayName
     }
 
+    # documentation says it is not optional, but i think it is
     if ($Description) {
         $body.description = $Description
     }
 
     $bodyJson = $body | ConvertTo-Json -Depth 10
 
-    $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/notebooks" -Verb "POST" -Payload $bodyJson
+    $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/items/$ItemId" -Verb "PATCH" -Payload $bodyJson
     return $response
 }

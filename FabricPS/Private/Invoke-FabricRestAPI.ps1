@@ -21,7 +21,7 @@ function Invoke-FabricRestAPI {
         [string]$Endpoint,
 
         [Parameter(Mandatory = $true)]
-        [ValidateSet("GET", "POST", "DELETE")]
+        [ValidateSet("GET", "POST", "DELETE", "PATCH")]
         [string]$Verb,
         
         [Parameter(Mandatory = $false)]
