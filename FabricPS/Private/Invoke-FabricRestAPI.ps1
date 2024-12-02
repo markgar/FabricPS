@@ -60,7 +60,7 @@ function Invoke-FabricRestAPI {
             "Content-Type" = "application/json"
         }
 
-        if ($Payload -eq $null) {
+        if ($Payload -ne $null) {
             $hasPayload = $true
         } else {
             $hasPayload = $false
@@ -68,7 +68,7 @@ function Invoke-FabricRestAPI {
 
         # Construct the request body
         if ($hasPayload) {
-            $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method $Verb -Body $bodyJson -UseBasicParsing -ErrorAction Stop
+            $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method $Verb -Body $Payload -UseBasicParsing -ErrorAction Stop
         }
         else {
             $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method $Verb -UseBasicParsing -ErrorAction Stop
