@@ -26,3 +26,4 @@ function Remove-Notebook {
 
     $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/notebooks/$NotebookId" -Verb "DELETE"
     return $response
+}

@@ -41,3 +41,4 @@ function Update-NotebookDefinition {
 
     $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/notebooks/$NotebookId/updateDefinition" -Verb "POST" -Payload $Definition
     return $response
+}
