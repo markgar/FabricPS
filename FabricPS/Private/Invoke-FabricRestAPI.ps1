@@ -77,7 +77,7 @@ function Invoke-FabricRestAPI {
         # Send the POST request to create the notebook
         $statusCode = $response.StatusCode
 
-        if ($statusCode -eq 200) {
+        if (($statusCode -eq 200) -or ($statusCode -eq 201)) {
             $responseObj = $response.Content | ConvertFrom-Json
             return $responseObj
         }

@@ -1,6 +1,10 @@
 # Import the List-Workspaces function
 . $PSScriptRoot\Private\Invoke-FabricRestAPI.ps1
 
+. $PSScriptRoot\Workspace\Get-WorkspaceRoleAssignments.ps1
+. $PSScriptRoot\Workspace\New-Workspace.ps1
+. $PSScriptRoot\Workspace\New-WorkspaceRoleAssignment.ps1
+
 . $PSScriptRoot\Item\Get-Item.ps1
 . $PSScriptRoot\Item\Get-ItemDefinition.ps1
 . $PSScriptRoot\Item\Get-Items.ps1
