@@ -15,7 +15,7 @@
     Description = 'FabricPS module to manage and list workspaces.'
 
     # Functions to export from the module
-    FunctionsToExport = @(*)
+    FunctionsToExport = @('*')
 
     # (Optional) PowerShell version required
     PowerShellVersion = '5.1'
