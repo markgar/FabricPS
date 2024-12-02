@@ -3,7 +3,7 @@
     RootModule = 'FabricPS.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.1.1'
+    ModuleVersion = '0.1.2'
 
     # ID used to uniquely identify this module
     GUID = '8231d005-a4a9-4c91-9791-cb7ad552edd4'
@@ -15,7 +15,7 @@
     Description = 'FabricPS module to manage and list workspaces.'
 
     # Functions to export from the module
-    FunctionsToExport = @('New-Notebook', 'Get-NotebookDefinition', 'Update-NotebookDefinition')
+    FunctionsToExport = @(*)
 
     # (Optional) PowerShell version required
     PowerShellVersion = '5.1'
