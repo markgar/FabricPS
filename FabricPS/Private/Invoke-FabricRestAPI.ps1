@@ -68,7 +68,6 @@ function Invoke-FabricRestAPI {
 
         # Construct the request body
         if ($hasPayload) {
-            $bodyJson = $Payload | ConvertTo-Json -Depth 10
             $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method $Verb -Body $bodyJson -UseBasicParsing -ErrorAction Stop
         }
         else {
