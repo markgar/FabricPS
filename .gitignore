@@ -1,0 +1,30 @@
+# Ignore the Scripts directory
+Scripts/
+Archive/
+
+# Ignore PowerShell profile files
+$PROFILE*
+ 
+# Ignore module build directories
+bin/
+obj/
+
+# Ignore temporary PowerShell files
+*.ps1~
+*.psd1~
+*.psm1~
+
+# Ignore log files
+*.log
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
