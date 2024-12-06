@@ -7,6 +7,12 @@
 . $PSScriptRoot\Workspace\New-WorkspaceRoleAssignment.ps1
 . $PSScriptRoot\Workspace\Remove-Workspace.ps1
 
+. $PSScriptRoot\Lakehouse\Get-Lakehouse.ps1
+. $PSScriptRoot\Lakehouse\Get-Lakehouses.ps1
+. $PSScriptRoot\Lakehouse\New-Lakehouse.ps1
+. $PSScriptRoot\Lakehouse\Remove-Lakehouse.ps1
+. $PSScriptRoot\Lakehouse\Update-Lakehouse.ps1
+
 . $PSScriptRoot\FabricItem\Get-FabricItem.ps1
 . $PSScriptRoot\FabricItem\Get-FabricItemDefinition.ps1
 . $PSScriptRoot\FabricItem\Get-FabricItems.ps1
