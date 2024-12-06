@@ -19,6 +19,15 @@ New-WorkspaceRoleAssignment -WorkspaceId $workspace.id -PrincipalId $principalId
 Write-Host 'Get-WorkspaceRoleAssignments'
 Get-WorkspaceRoleAssignments -WorkspaceId $workspace.id
 
+Write-Host 'New-Lakehouse'
+$lakehouse = New-Lakehouse -WorkspaceId $workspace.id -DisplayName 'Test Lakehouse' -Description 'A test lakehouse'
+Write-Host 'New-Lakehouse'
+New-Lakehouse -WorkspaceId $workspace.id -DisplayName 'Test Lakehouse 2'
+Write-Host 'Get-Lakehouses'
+Get-Lakehouses -WorkspaceId $workspace.id
+Write-Host 'Remove-Lakehouse'
+Remove-Lakehouse -WorkspaceId $workspace.id -LakehouseId $lakehouse.id
+
 Write-Host 'New-Notebook'
 $notebook = New-Notebook -WorkspaceId $workspace.id -DisplayName 'Test Notebook' -Description 'A test notebook'
 Write-Host 'New-Notebook'
