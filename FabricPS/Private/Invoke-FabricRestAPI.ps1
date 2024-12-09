@@ -31,7 +31,7 @@ function Invoke-FabricRestAPI {
     )
 
     # Suppress the breaking change warning: Get-AzAccessToken is being changed to return a SecureString in Version 13 of Az module
-    # Update-AzConfig -DisplayBreakingChangeWarning $false
+    Update-AzConfig -DisplayBreakingChangeWarning $false
 
 
     if (-not (Get-Module -Name Az.Accounts)) {
