@@ -1,7 +1,8 @@
 try{
-    $ErrorActionPreference = "Stop"
-    Clear-Host
-    Import-Module '.\FabricPS' -Force
+    Write-Host 'Hello World'
+    # $ErrorActionPreference = "Stop"
+    # Clear-Host
+    # Import-Module '.\FabricPS' -Force
     
     # $capacityId = '11E25ED5-7B83-4C7A-9ECD-EBF8F667CA20'
     # $principalId = '60bf0b41-0484-466b-8b46-ebb6692bd8cc'
@@ -55,6 +56,7 @@ try{
     # Update-FabricItem -WorkspaceId $workspace.id -ItemId $anotherNotebook.id -DisplayName 'Updated by Update Item'
 }
 catch {
-    Write-Error "An error occurred: $_" exit 1
+    Write-Error "An error occurred: $_"
+    exit 1
 }
 
