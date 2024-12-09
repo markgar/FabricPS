@@ -3,7 +3,7 @@
     RootModule = 'FabricPS.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.5.8'
+    ModuleVersion = '0.5.9'
 
     # ID used to uniquely identify this module
     GUID = '8231d005-a4a9-4c91-9791-cb7ad552edd4'

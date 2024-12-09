@@ -1,3 +1,4 @@
+$ErrorActionPreference = "Stop"
 Clear-Host
 Import-Module '.\FabricPS' -Force
 
@@ -7,7 +8,6 @@ $workspaceName = 'Automated_Test_Workspace'
 
 Write-Host 'Get-Workspaces'
 $workspaces = Get-Workspaces
-$workspaces
 $existingWorkspace = $workspaces.value | Where-Object { $_.DisplayName -eq $workspaceName }
 if ($existingWorkspace) {
     Write-Host 'Remove-Workspace'
