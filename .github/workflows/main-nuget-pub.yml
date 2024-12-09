@@ -44,6 +44,12 @@ jobs:
         shell: pwsh
         run: ./test.ps1
 
+      - name: Clean up keystore.cache
+        if: always()
+        run: |
+          echo "Cleaning up keystore.cache file..."
+          rm -f /home/runner/.Azure/keystore.cache
+
   push-to-psgallery:
     runs-on: ubuntu-latest
     environment: 'prod'
