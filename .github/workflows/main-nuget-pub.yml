@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'FabricPS/FabricPS.psd1'
+    - 'test.ps1'
     - '.github/workflows/main-nuget-pub.yml'
 
 jobs:

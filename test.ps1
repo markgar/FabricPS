@@ -42,15 +42,15 @@ try{
     Write-Host 'Remove-Notebook'
     Remove-Notebook -WorkspaceId $workspace.id -NotebookId $notebook.id
     
-    Write-Host 'Get-FabricItems'
-    Get-FabricItems -WorkspaceId $workspace.id -Type 'Notebook'
-    Write-Host 'Get-FabricItemDefinition'
-    Get-FabricItemDefinition -WorkspaceId $workspace.id -ItemId $anotherNotebook.id
-    Write-Host 'Get-FabricItems'
-    Get-FabricItems -WorkspaceId $workspace.id -Type 'Notebook'
-    Write-Host 'New-FabricItem'
-    New-FabricItem -WorkspaceId $workspace.id -Type 'Notebook' -DisplayName 'Created_by_Create_Item'
-    Write-Host 'Remove-FabricItem'
+    # Write-Host 'Get-FabricItems'
+    # Get-FabricItems -WorkspaceId $workspace.id -Type 'Notebook'
+    # Write-Host 'Get-FabricItemDefinition'
+    # Get-FabricItemDefinition -WorkspaceId $workspace.id -ItemId $anotherNotebook.id
+    # Write-Host 'Get-FabricItems'
+    # Get-FabricItems -WorkspaceId $workspace.id -Type 'Notebook'
+    # Write-Host 'New-FabricItem'
+    # New-FabricItem -WorkspaceId $workspace.id -Type 'Notebook' -DisplayName 'Created_by_Create_Item'
+    # Write-Host 'Remove-FabricItem'
     # Remove-FabricItem -WorkspaceId $workspace.id -ItemId $anotherNotebook.id
     # Update-FabricItem -WorkspaceId $workspace.id -ItemId $anotherNotebook.id -DisplayName 'Updated by Update Item'
 }
