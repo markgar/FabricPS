@@ -1,7 +1,7 @@
 try{
     Write-Host 'Hello World'
     # $ErrorActionPreference = "Stop"
-    # Clear-Host
+    Clear-Host
     # Import-Module '.\FabricPS' -Force
     
     # $capacityId = '11E25ED5-7B83-4C7A-9ECD-EBF8F667CA20'
