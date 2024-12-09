@@ -9,26 +9,26 @@ try{
     
     Write-Host 'Get-Workspaces'
     $workspaces = Get-Workspaces
-    $existingWorkspace = $workspaces.value | Where-Object { $_.DisplayName -eq $workspaceName }
-    if ($existingWorkspace) {
-        Write-Host 'Remove-Workspace'
-        Remove-Workspace -WorkspaceId $existingWorkspace.id
-    }
-    Write-Host 'New-Workspace'
-    $workspace = New-Workspace -DisplayName $workspaceName -Description 'A test workspace' -CapacityId $capacityId
-    Write-Host 'New-WorkspaceRoleAssignment'
-    New-WorkspaceRoleAssignment -WorkspaceId $workspace.id -PrincipalId $principalId -PrincipalType 'User' -WorkspaceRole 'Admin'
-    Write-Host 'Get-WorkspaceRoleAssignments'
-    Get-WorkspaceRoleAssignments -WorkspaceId $workspace.id
+    # $existingWorkspace = $workspaces.value | Where-Object { $_.DisplayName -eq $workspaceName }
+    # if ($existingWorkspace) {
+    #     Write-Host 'Remove-Workspace'
+    #     Remove-Workspace -WorkspaceId $existingWorkspace.id
+    # }
+    # Write-Host 'New-Workspace'
+    # $workspace = New-Workspace -DisplayName $workspaceName -Description 'A test workspace' -CapacityId $capacityId
+    # Write-Host 'New-WorkspaceRoleAssignment'
+    # New-WorkspaceRoleAssignment -WorkspaceId $workspace.id -PrincipalId $principalId -PrincipalType 'User' -WorkspaceRole 'Admin'
+    # Write-Host 'Get-WorkspaceRoleAssignments'
+    # Get-WorkspaceRoleAssignments -WorkspaceId $workspace.id
     
-    Write-Host 'New-Lakehouse'
-    $lakehouse = New-Lakehouse -WorkspaceId $workspace.id -DisplayName 'Test_Lakehouse' -Description 'A test lakehouse'
-    Write-Host 'New-Lakehouse'
-    New-Lakehouse -WorkspaceId $workspace.id -DisplayName 'Test_Lakehouse_2'
-    Write-Host 'Get-Lakehouses'
-    Get-Lakehouses -WorkspaceId $workspace.id
-    Write-Host 'Remove-Lakehouse'
-    Remove-Lakehouse -WorkspaceId $workspace.id -LakehouseId $lakehouse.id
+    # Write-Host 'New-Lakehouse'
+    # $lakehouse = New-Lakehouse -WorkspaceId $workspace.id -DisplayName 'Test_Lakehouse' -Description 'A test lakehouse'
+    # Write-Host 'New-Lakehouse'
+    # New-Lakehouse -WorkspaceId $workspace.id -DisplayName 'Test_Lakehouse_2'
+    # Write-Host 'Get-Lakehouses'
+    # Get-Lakehouses -WorkspaceId $workspace.id
+    # Write-Host 'Remove-Lakehouse'
+    # Remove-Lakehouse -WorkspaceId $workspace.id -LakehouseId $lakehouse.id
     
     # Write-Host 'New-Notebook'
     # $notebook = New-Notebook -WorkspaceId $workspace.id -DisplayName 'Test_Notebook' -Description 'A test notebook'
