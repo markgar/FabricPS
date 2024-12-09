@@ -31,7 +31,7 @@ function Invoke-FabricRestAPI {
     )
 
     # Suppress the breaking change warning: Get-AzAccessToken is being changed to return a SecureString in Version 13 of Az module
-    Update-AzConfig -DisplayBreakingChangeWarning $false
+    # Update-AzConfig -DisplayBreakingChangeWarning $false
 
 
     if (-not (Get-Module -Name Az.Accounts)) {
@@ -46,8 +46,18 @@ function Invoke-FabricRestAPI {
 
     try {
         try {
+            # Retrieve the access token for the Fabric API
+            # $tokenResponse = Get-AzAccessToken -ResourceUrl "https://api.fabric.microsoft.com"
+
+            # if (-not $tokenResponse) {
+            #     throw "Unable to retrieve access token."
+            # }
+    
+            # $accessToken = $tokenResponse.Token
+
             # Retrieve the access token
-            $token_decrypted = (ConvertFrom-SecureString -SecureString (Get-AzAccessToken -AsSecureString).Token -AsPlainText)
+            $secureStringToken = (Get-AzAccessToken -AsSecureString -ResourceUrl "https://api.fabric.microsoft.com").Token
+            $accessToken = (ConvertFrom-SecureString -SecureString $secureStringToken -AsPlainText)
         }
         catch {
             Write-Error "Failed to retrieve access token: $_"
@@ -55,7 +65,7 @@ function Invoke-FabricRestAPI {
 
         $uri = "https://api.fabric.microsoft.com/v1/$Endpoint"
         $headers = @{
-            Authorization  = "Bearer $token_decrypted"
+            Authorization  = "Bearer $accessToken"
             Accept         = "application/json"
             "Content-Type" = "application/json"
         }
