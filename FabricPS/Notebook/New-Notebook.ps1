@@ -25,6 +25,8 @@ function New-Notebook {
         [string]$WorkspaceId,
 
         [Parameter(Mandatory = $true)]
+        [ValidateLength(1, 256)]
+        [ValidatePattern("^[a-zA-Z0-9_-]+$")]
         [string]$DisplayName,
 
         [Parameter(Mandatory = $false)]

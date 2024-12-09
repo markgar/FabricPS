@@ -25,6 +25,8 @@ function New-Lakehouse {
         [string]$WorkspaceId,
 
         [Parameter(Mandatory = $true)]
+        [ValidateLength(1, 256)]
+        [ValidatePattern("^[a-zA-Z0-9_-]+$")]
         [string]$DisplayName,
 
         [Parameter(Mandatory = $false)]
@@ -42,6 +44,13 @@ function New-Lakehouse {
 
     $bodyJson = $body | ConvertTo-Json -Depth 10
 
-    $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/lakehouses" -Verb "POST" -Payload $bodyJson
-    return $response
+    try {
+        $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/lakehouses" -Verb "POST" -Payload $bodyJson
+        return $response
+    }
+    catch {
+        Write-Error "Failed to create lakehouse: $_"
+        throw
+    }
+
 }
