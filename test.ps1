@@ -3,12 +3,12 @@ try{
     Clear-Host
     Import-Module '.\FabricPS' -Force
     
-    $capacityId = '11E25ED5-7B83-4C7A-9ECD-EBF8F667CA20'
-    $principalId = '60bf0b41-0484-466b-8b46-ebb6692bd8cc'
-    $workspaceName = 'Automated_Test_Workspace'
+    # $capacityId = '11E25ED5-7B83-4C7A-9ECD-EBF8F667CA20'
+    # $principalId = '60bf0b41-0484-466b-8b46-ebb6692bd8cc'
+    # $workspaceName = 'Automated_Test_Workspace'
     
-    Write-Host 'Get-Workspaces'
-    $workspaces = Get-Workspaces
+    # Write-Host 'Get-Workspaces'
+    # $workspaces = Get-Workspaces
     # $existingWorkspace = $workspaces.value | Where-Object { $_.DisplayName -eq $workspaceName }
     # if ($existingWorkspace) {
     #     Write-Host 'Remove-Workspace'
