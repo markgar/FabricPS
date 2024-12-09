@@ -76,16 +76,18 @@ function Invoke-FabricRestAPI {
             $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method $Verb -UseBasicParsing -ErrorAction Stop
         }
 
-        # Send the POST request to create the notebook
+        # Check for success
         $statusCode = $response.StatusCode
 
         if (($statusCode -eq 200) -or ($statusCode -eq 201)) {
             $responseObj = $response.Content | ConvertFrom-Json
             return $responseObj
         }
-        elseif (($statusCode -eq 202) -and ($response.Headers["x-ms-operation-id"])) {
+        elseif (($statusCode -eq 202)) {
             # Check for 'x-ms-operation-id' header
             $operationId = $response.Headers["x-ms-operation-id"]
+            $retryAfter = [int]$response.Headers["Retry-After"].value
+            Start-Sleep -Milliseconds $retryAfter
 
             # Construct the operation state URI
             $operationStatetUri = "https://api.fabric.microsoft.com/v1/operations/$operationId"
@@ -93,8 +95,6 @@ function Invoke-FabricRestAPI {
             $operationStatus = ""
             $seconds = 1
             while ($operationStatus -ne "Succeeded") {
-                # Give just a little time to process
-                Start-Sleep -Milliseconds 100
                 # Send GET request to retrieve the operation state
                 $operationStateResponse = Invoke-RestMethod -Uri $operationStatetUri -Headers $headers -Method Get -ErrorAction Stop
 
@@ -102,7 +102,7 @@ function Invoke-FabricRestAPI {
 
                 # Check for failure
                 if ($operationStatus -eq "Failed") {
-                    Write-Error "New notebook operation failed."
+                    Write-Error $operationStateResponse.error
                     return
                 }
                 
@@ -114,22 +114,35 @@ function Invoke-FabricRestAPI {
         
                 # Exponential backoff
                 $seconds = $seconds * 2
-                if ($seconds -gt 16)
+                if ($seconds -gt 64)
                 {
-                    Write-Error "New notebook operation timed out."
+                    Write-Error "Operation timed out."
                     return
                 }
             }
- 
+
             if ($operationStateResponse.status -eq "Succeeded") {
                 # Construct the operation result URI
                 $operationResultUri = "https://api.fabric.microsoft.com/v1/operations/$operationId/result"
-
-                # Send GET request to retrieve the operation result
-                $operationResultResponse = Invoke-RestMethod -Uri $operationResultUri -Headers $headers -Method Get -ErrorAction Stop
-
-                return $operationResultResponse
-            }            
+                try {
+                    $operationResultResponse = Invoke-WebRequest -Uri $operationResultUri -Headers $headers -Method Get -ErrorAction Stop
+                    return $operationResultResponse.Content | ConvertFrom-Json
+                }
+                catch {
+                    if ($_.Exception.Response -and $_.Exception.Response.StatusCode -eq 400) {
+                        $errorResponse = $_.Exception.Response.GetResponseStream() | New-Object System.IO.StreamReader | ForEach-Object { $_.ReadToEnd() } | ConvertFrom-Json
+                        if ($errorResponse.errorCode -eq "OperationHasNoResult") {
+                            Write-Error "The operation has no result."
+                        }
+                        else {
+                            Write-Error $_
+                        }
+                    }
+                    else {
+                        Write-Error $_
+                    }
+                }
+            }      
         }
         else {
             Write-Error "Unexpected status code: $statusCode"
@@ -137,6 +150,6 @@ function Invoke-FabricRestAPI {
         }
     }
     catch {
-        Write-Error "Failed to call ${Endpoint}: $_"
+        Write-Error $_
     }
 }
