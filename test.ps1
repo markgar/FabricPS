@@ -38,7 +38,7 @@ try {
     $filePath = "./FabricPS/Resources/abc123.csv"
     $blobContainerName = $workspace.Id
     $blobName = $lakehouse2.Id + "/Files/abc123.csv"
-    Write-Host "Set=AzStorageBlobContent"
+    Write-Host "Set-AzStorageBlobContent $blobContainerName $blobName"
     Set-AzStorageBlobContent -File $filePath -Container $blobContainerName -Blob $blobName -Context $ctx
 
     Write-Host 'New-Notebook'
