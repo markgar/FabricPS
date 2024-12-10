@@ -28,7 +28,7 @@ try {
     $lakehouse = New-Lakehouse -WorkspaceId $workspace.id -DisplayName 'Test_Lakehouse_2'
     Write-Host 'Get-Lakehouses'
     Get-Lakehouses -WorkspaceId $workspace.id
-    Wirte-Host 'Get-Lakehouse (Test_Lakehouse_2)'
+    Write-Host 'Get-Lakehouse (Test_Lakehouse_2)'
     Get-Lakehouse -WorkspaceId $workspace.id -LakehouseId $lakehouse.id
   
     # upload a file
