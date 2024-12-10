@@ -33,7 +33,7 @@ try {
   
     # upload a file
     $ctx = New-AzStorageContext -StorageAccountName 'onelake' -UseConnectedAccount -Endpoint 'fabric.microsoft.com'
-    $filePath = "./scripts/abc123.csv"
+    $filePath = "./FabricPS/Resources/abc123.csv"
     $blobContainerName = $workspace.Id
     $blobName = $lakehouse2.Id + "/Files/abc123.csv"
     Set-AzStorageBlobContent -File $filePath -Container $blobContainerName -Blob $blobName -Context $ctx
