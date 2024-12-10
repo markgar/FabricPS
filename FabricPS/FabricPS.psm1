@@ -23,6 +23,16 @@
 . $PSScriptRoot\Notebook\Remove-Notebook.ps1
 . $PSScriptRoot\Notebook\Update-NotebookDefinition.ps1
 
+. $PSScriptRoot\Payloads\Get-NotebookDefinitionPayload.ps1
+
+. $PSScriptRoot\SemanticModel\Get-SemanticModel.ps1
+. $PSScriptRoot\SemanticModel\Get-SemanticModelDefinition.ps1
+. $PSScriptRoot\SemanticModel\Get-SemanticModels.ps1
+. $PSScriptRoot\SemanticModel\New-SemanticModel.ps1
+. $PSScriptRoot\SemanticModel\Remove-SemanticModel.ps1
+. $PSScriptRoot\SemanticModel\Update-SemanticModel.ps1
+. $PSScriptRoot\SemanticModel\Update-SemanticModelDefinition.ps1
+
 . $PSScriptRoot\Spark\Get-WorkspaceSparkSettings.ps1
 . $PSScriptRoot\Spark\Update-WorkspaceSparkSettings.ps1
 

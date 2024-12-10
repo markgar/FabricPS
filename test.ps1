@@ -1,6 +1,4 @@
-try{
-    Write-Host 'Hello World'
-    # $ErrorActionPreference = "Stop"
+try {
     Import-Module '.\FabricPS' -Force
     
     $capacityId = '11E25ED5-7B83-4C7A-9ECD-EBF8F667CA20'
@@ -21,15 +19,25 @@ try{
     Write-Host 'Get-WorkspaceRoleAssignments'
     Get-WorkspaceRoleAssignments -WorkspaceId $workspace.id
     
-    Write-Host 'New-Lakehouse'
+    Write-Host 'New-Lakehouse (Test_Lakehouse)'
     $lakehouse = New-Lakehouse -WorkspaceId $workspace.id -DisplayName 'Test_Lakehouse' -Description 'A test lakehouse'
-    Write-Host 'New-Lakehouse'
-    New-Lakehouse -WorkspaceId $workspace.id -DisplayName 'Test_Lakehouse_2'
+    Write-Host 'Remove-Lakehouse (Test_Lakehouse)'
+    Remove-Lakehouse -WorkspaceId $workspace.id -LakehouseId $lakehouse.id
+
+    Write-Host 'New-Lakehouse Test_Lakehouse_2'
+    $lakehouse = New-Lakehouse -WorkspaceId $workspace.id -DisplayName 'Test_Lakehouse_2'
     Write-Host 'Get-Lakehouses'
     Get-Lakehouses -WorkspaceId $workspace.id
-    Write-Host 'Remove-Lakehouse'
-    Remove-Lakehouse -WorkspaceId $workspace.id -LakehouseId $lakehouse.id
-    
+    Wirte-Host 'Get-Lakehouse (Test_Lakehouse_2)'
+    Get-Lakehouse -WorkspaceId $workspace.id -LakehouseId $lakehouse.id
+  
+    # upload a file
+    $ctx = New-AzStorageContext -StorageAccountName 'onelake' -UseConnectedAccount -Endpoint 'fabric.microsoft.com'
+    $filePath = "./scripts/abc123.csv"
+    $blobContainerName = $workspace.Id
+    $blobName = $lakehouse2.Id + "/Files/abc123.csv"
+    Set-AzStorageBlobContent -File $filePath -Container $blobContainerName -Blob $blobName -Context $ctx
+
     Write-Host 'New-Notebook'
     $notebook = New-Notebook -WorkspaceId $workspace.id -DisplayName 'Test_Notebook' -Description 'A test notebook'
     Write-Host 'New-Notebook'
