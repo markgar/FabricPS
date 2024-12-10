@@ -1,0 +1,133 @@
+{
+  "compatibilityLevel": 1604,
+  "model": {
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.139.7496.1 (Main)+061188de2d27b556d0c15d8f70c4426f68783390"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"DatabaseQuery\"]"
+      }
+    ],
+    "collation": "Latin1_General_100_BIN2_UTF8",
+    "culture": "en-US",
+    "cultures": [
+      {
+        "name": "en-US",
+        "linguisticMetadata": {
+          "content": {
+            "Language": "en-US",
+            "Version": "1.0.0"
+          },
+          "contentType": "json"
+        }
+      }
+    ],
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "expressions": [
+      {
+        "name": "DatabaseQuery",
+        "annotations": [
+          {
+            "name": "PBI_IncludeFutureArtifacts",
+            "value": "False"
+          }
+        ],
+        "expression": [
+          "let",
+          "    database = Sql.Database(\"K2ISRBW3V5AEJGY2HWDWJXTJ4E-2MT7QR63OANUDBJPTRK5DVN76A.datawarehouse.fabric.microsoft.com\", \"c93fecd6-bb3c-4bce-905e-cf017e1a6768\")",
+          "in",
+          "    database"
+        ],
+        "kind": "m",
+        "lineageTag": "68094ca4-80f3-4ccc-8008-76b250333784"
+      }
+    ],
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "abc123",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "a",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "41740daf-1aa1-40c1-a5a7-5748fb58d5f7",
+            "sourceColumn": "a",
+            "sourceLineageTag": "a",
+            "sourceProviderType": "int",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "b",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "c476b667-8050-4bca-9505-29d955a6c3b7",
+            "sourceColumn": "b",
+            "sourceLineageTag": "b",
+            "sourceProviderType": "int",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "c",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "17124b76-d540-4505-bf04-a653705bf6df",
+            "sourceColumn": "c",
+            "sourceLineageTag": "c",
+            "sourceProviderType": "int",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "cad15566-898e-4d40-8a76-7f90bcbabdfb",
+        "partitions": [
+          {
+            "name": "abc123",
+            "mode": "directLake",
+            "source": {
+              "entityName": "abc123",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "dbo",
+              "type": "entity"
+            }
+          }
+        ],
+        "sourceLineageTag": "[dbo].[abc123]"
+      }
+    ]
+  }
+}

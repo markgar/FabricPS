@@ -45,9 +45,11 @@ function Update-NotebookDefinition {
         [string]$NotebookId,
 
         [Parameter(Mandatory = $true)]
-        [string]$Definition
+        [hashtable]$Definition
     )
 
-    $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/notebooks/$NotebookId/updateDefinition" -Verb "POST" -Payload $Definition
+    $json = $Definition | ConvertTo-Json -Depth 10
+    
+    $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/notebooks/$NotebookId/updateDefinition" -Verb "POST" -Payload $json
     return $response
 }

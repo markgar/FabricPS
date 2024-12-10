@@ -32,9 +32,11 @@ function Update-FabricItemDefinition {
         [string]$ItemId,
 
         [Parameter(Mandatory = $true)]
-        [string]$Definition
+        [hashtable]$Definition
     )
 
-    $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/items/$ItemId/updateDefinition" -Verb "POST" -Payload $Definition
+    $json = $Definition | ConvertTo-Json -Depth 10
+
+    $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/items/$ItemId/updateDefinition" -Verb "POST" -Payload $json
     return $response
 }

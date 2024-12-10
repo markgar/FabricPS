@@ -24,6 +24,7 @@
 . $PSScriptRoot\Notebook\Update-NotebookDefinition.ps1
 
 . $PSScriptRoot\Payloads\Get-NotebookDefinitionPayload.ps1
+. $PSScriptRoot\Payloads\Get-ItemDefinitionPayload.ps1
 
 . $PSScriptRoot\SemanticModel\Get-SemanticModel.ps1
 . $PSScriptRoot\SemanticModel\Get-SemanticModelDefinition.ps1

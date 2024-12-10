@@ -26,9 +26,11 @@ function Update-SemanticModelDefinition {
         [string]$SemanticModelId,
 
         [Parameter(Mandatory = $true)]
-        [string]$Definition
+        [hashtable]$Definition
     )
+    
+    $json = $Definition | ConvertTo-Json -Depth 10
 
-    $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/semanticModels/$SemanticModelId" -Verb "POST" -Payload $Definition
+    $response = Invoke-FabricRestAPI -Endpoint "workspaces/$WorkspaceId/semanticModels/$SemanticModelId" -Verb "POST" -Payload $json
     return $response
 }

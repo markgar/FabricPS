@@ -4,7 +4,7 @@ try {
     $capacityId = '11E25ED5-7B83-4C7A-9ECD-EBF8F667CA20'
     $principalId = '60bf0b41-0484-466b-8b46-ebb6692bd8cc'
     $workspaceName = 'Automated_Test_Workspace'
-    
+
     Write-Host 'Get-Workspaces'
     $workspaces = Get-Workspaces
     $existingWorkspace = $workspaces.value | Where-Object { $_.DisplayName -eq $workspaceName }
@@ -19,7 +19,12 @@ try {
     New-WorkspaceRoleAssignment -WorkspaceId $workspace.id -PrincipalId $principalId -PrincipalType 'User' -WorkspaceRole 'Admin'
     Write-Host 'Get-WorkspaceRoleAssignments'
     Get-WorkspaceRoleAssignments -WorkspaceId $workspace.id
-    
+
+    Write-Host "Get-ItemDefinitionPayload"
+    $payload1 = Get-ItemDefinitionPayload -DirectoryPath "$pwd/FabricPS/SamplePayloads/SemanticModel"
+    Write-Host "New-SemanticModel"
+    New-SemanticModel -WorkspaceId $workspace.Id -DisplayName 'Test_SemanticModel' -Definition $payload1
+
     Write-Host 'New-Lakehouse (Test_Lakehouse)'
     $lakehouse = New-Lakehouse -WorkspaceId $workspace.id -DisplayName 'Test_Lakehouse' -Description 'A test lakehouse'
     Write-Host 'Remove-Lakehouse (Test_Lakehouse)'
