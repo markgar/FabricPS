@@ -14,6 +14,7 @@ try {
     }
     Write-Host 'New-Workspace'
     $workspace = New-Workspace -DisplayName $workspaceName -Description 'A test workspace' -CapacityId $capacityId
+    
     Write-Host 'New-WorkspaceRoleAssignment'
     New-WorkspaceRoleAssignment -WorkspaceId $workspace.id -PrincipalId $principalId -PrincipalType 'User' -WorkspaceRole 'Admin'
     Write-Host 'Get-WorkspaceRoleAssignments'
@@ -32,10 +33,12 @@ try {
     Get-Lakehouse -WorkspaceId $workspace.id -LakehouseId $lakehouse.id
   
     # upload a file
+    Write-Host "New-AzStorageContext"
     $ctx = New-AzStorageContext -StorageAccountName 'onelake' -UseConnectedAccount -Endpoint 'fabric.microsoft.com'
     $filePath = "./FabricPS/Resources/abc123.csv"
     $blobContainerName = $workspace.Id
     $blobName = $lakehouse2.Id + "/Files/abc123.csv"
+    Write-Host "Set=AzStorageBlobContent"
     Set-AzStorageBlobContent -File $filePath -Container $blobContainerName -Blob $blobName -Context $ctx
 
     Write-Host 'New-Notebook'
