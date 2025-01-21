@@ -21,9 +21,9 @@ try {
     Get-WorkspaceRoleAssignments -WorkspaceId $workspace.id
 
     Write-Host "Get-ItemDefinitionPayload"
-    $payload1 = Get-ItemDefinitionPayload -DirectoryPath "$pwd/FabricPS/SamplePayloads/SemanticModel"
+    $payload = Get-ItemDefinitionPartsPayload -DirectoryPath "$pwd/FabricPS/SamplePayloads/SemanticModel"
     Write-Host "New-SemanticModel"
-    New-SemanticModel -WorkspaceId $workspace.Id -DisplayName 'Test_SemanticModel' -Definition $payload1
+    New-SemanticModel -WorkspaceId $workspace.Id -DisplayName 'Test_SemanticModel' -Definition $payload
 
     Write-Host 'New-Lakehouse (Test_Lakehouse)'
     $lakehouse = New-Lakehouse -WorkspaceId $workspace.id -DisplayName 'Test_Lakehouse' -Description 'A test lakehouse'

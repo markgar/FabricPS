@@ -1,4 +1,4 @@
-function Get-ItemDefinitionPayload {
+function Get-ItemDefinitionPartsPayload {
     param (
         [Parameter(Mandatory = $true)]
         [string]$DirectoryPath
@@ -25,5 +25,5 @@ function Get-ItemDefinitionPayload {
         parts = $parts
     }
 
-    return $payload
+    return $definition
 }

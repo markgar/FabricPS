@@ -36,7 +36,7 @@ function New-SemanticModel {
         [string]$Description,
 
         [Parameter(Mandatory = $true)]
-        [string]$Definition
+        [hashtable]$Definition
     )
 
     # Construct the request body
@@ -45,6 +45,7 @@ function New-SemanticModel {
         description = $Description
         definition = $Definition
     }
+
 
     $bodyJson = $body | ConvertTo-Json -Depth 10
 
